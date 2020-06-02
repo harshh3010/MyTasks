@@ -1,7 +1,10 @@
 package com.codebee.mytasks;
 
-public class MyTask {
+import java.io.Serializable;
 
+public class MyTask implements Serializable {
+
+    private String Id;
     private String Label;
     private String Description;
     private String Date;
@@ -11,6 +14,13 @@ public class MyTask {
     public MyTask() {
     }
 
+    public String getId() {
+        return Id;
+    }
+
+    public void setId(String id) {
+        Id = id;
+    }
 
     public String getLabel() {
         return Label;

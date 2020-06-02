@@ -69,6 +69,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if(cursor.moveToFirst()){
             while (cursor.moveToNext()){
                 MyTask myTask = new MyTask();
+                myTask.setId(cursor.getString(cursor.getColumnIndex(COL_1)));
                 myTask.setLabel(cursor.getString(cursor.getColumnIndex(COL_2)));
                 myTask.setDescription(cursor.getString(cursor.getColumnIndex(COL_3)));
                 myTask.setDate(cursor.getString(cursor.getColumnIndex(COL_4)));
@@ -79,5 +80,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             }
         }
         return myTaskArrayList;
+    }
+
+    public int deleteData(String id){
+        SQLiteDatabase db = getWritableDatabase();
+        return db.delete(TABLE_NAME,COL_1 + " =?",new String[]{id});
+    }
+
+    public boolean updateData(MyTask myTask){
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COL_2,myTask.getLabel());
+        contentValues.put(COL_3,myTask.getDescription());
+        contentValues.put(COL_4,myTask.getDate());
+        contentValues.put(COL_5,myTask.getTime());
+        contentValues.put(COL_6,myTask.getTimestamp());
+        db.update(TABLE_NAME,contentValues,COL_1 + " =?",new String[]{myTask.getId()});
+        return true;
     }
 }
