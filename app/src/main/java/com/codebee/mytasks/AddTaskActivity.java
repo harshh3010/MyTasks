@@ -3,6 +3,7 @@ package com.codebee.mytasks;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.view.View;
@@ -152,9 +153,10 @@ public class AddTaskActivity extends AppCompatActivity {
     }
 
     private void createTask() {
+
         MyTask myTask = new MyTask();
-        myTask.setLabel(((EditText) findViewById(R.id.add_task_label_text)).getText().toString());
-        myTask.setDescription(((EditText) findViewById(R.id.add_task_desc_text)).getText().toString());
+        myTask.setLabel(((EditText) findViewById(R.id.add_task_label_text)).getText().toString().trim());
+        myTask.setDescription(((EditText) findViewById(R.id.add_task_desc_text)).getText().toString().trim());
         myTask.setDate(date);
         myTask.setTime(time);
 
@@ -165,5 +167,12 @@ public class AddTaskActivity extends AppCompatActivity {
         myTask.setTimestamp(timestamp);
 
         //TODO : save this object in database
+        DatabaseHelper db = new DatabaseHelper(AddTaskActivity.this);
+        if(db.addData(myTask)){
+            Toast.makeText(getApplicationContext(),"Task added!",Toast.LENGTH_SHORT).show();
+            finish();
+        }else{
+            Toast.makeText(getApplicationContext(),"Unable to add task!",Toast.LENGTH_SHORT).show();
+        }
     }
 }

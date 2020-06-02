@@ -1,7 +1,7 @@
 package com.codebee.mytasks;
 
 public class MyTask {
-    private int Id;
+
     private String Label;
     private String Description;
     private String Date;
@@ -11,13 +11,6 @@ public class MyTask {
     public MyTask() {
     }
 
-    public int getId() {
-        return Id;
-    }
-
-    public void setId(int id) {
-        Id = id;
-    }
 
     public String getLabel() {
         return Label;
