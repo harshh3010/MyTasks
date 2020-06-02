@@ -166,7 +166,6 @@ public class AddTaskActivity extends AppCompatActivity {
 
         myTask.setTimestamp(timestamp);
 
-        //TODO : save this object in database
         DatabaseHelper db = new DatabaseHelper(AddTaskActivity.this);
         if(db.addData(myTask)){
             Toast.makeText(getApplicationContext(),"Task added!",Toast.LENGTH_SHORT).show();

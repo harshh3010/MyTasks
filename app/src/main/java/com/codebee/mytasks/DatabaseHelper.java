@@ -2,11 +2,14 @@ package com.codebee.mytasks;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+
+import java.util.ArrayList;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -57,5 +60,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }else{
             return true;
         }
+    }
+
+    public ArrayList<MyTask> getData(){
+        ArrayList<MyTask> myTaskArrayList = new ArrayList<>();
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery("select * from "+ TABLE_NAME,null);
+        if(cursor.moveToFirst()){
+            while (cursor.moveToNext()){
+                MyTask myTask = new MyTask();
+                myTask.setLabel(cursor.getString(cursor.getColumnIndex(COL_2)));
+                myTask.setDescription(cursor.getString(cursor.getColumnIndex(COL_3)));
+                myTask.setDate(cursor.getString(cursor.getColumnIndex(COL_4)));
+                myTask.setTime(cursor.getString(cursor.getColumnIndex(COL_5)));
+                myTask.setTimestamp(cursor.getLong(cursor.getColumnIndex(COL_6)));
+
+                myTaskArrayList.add(myTask);
+            }
+        }
+        return myTaskArrayList;
     }
 }
