@@ -78,16 +78,16 @@ public class AddTaskActivity extends AppCompatActivity {
         findViewById(R.id.add_task_save_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!((EditText) findViewById(R.id.add_task_label_text)).getText().toString().isEmpty() &&
-                        !((EditText) findViewById(R.id.add_task_desc_text)).getText().toString().isEmpty() &&
+                if (!((EditText) findViewById(R.id.add_task_label_text)).getText().toString().trim().isEmpty() &&
+                        !((EditText) findViewById(R.id.add_task_desc_text)).getText().toString().trim().isEmpty() &&
                         !time.isEmpty() &&
                         !date.isEmpty()) {
                     createTask();
                 }else{
-                    if(((EditText) findViewById(R.id.add_task_label_text)).getText().toString().isEmpty()){
+                    if(((EditText) findViewById(R.id.add_task_label_text)).getText().toString().trim().isEmpty()){
                         ((EditText) findViewById(R.id.add_task_label_text)).setError("This field cannot be left empty!");
                     }
-                    if(((EditText) findViewById(R.id.add_task_desc_text)).getText().toString().isEmpty()){
+                    if(((EditText) findViewById(R.id.add_task_desc_text)).getText().toString().trim().isEmpty()){
                         ((EditText) findViewById(R.id.add_task_desc_text)).setError("This field cannot be left empty!");
                     }
                     if(date.isEmpty()){

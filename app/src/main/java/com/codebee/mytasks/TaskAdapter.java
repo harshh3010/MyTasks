@@ -33,10 +33,15 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolderClas
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolderClass holder, int position) {
-        holder.label_txt.setText(myArr.get(position).getLabel());
-        holder.desc_txt.setText(myArr.get(position).getDescription());
-        holder.date_txt.setText(myArr.get(position).getDate());
-        holder.time_txt.setText(myArr.get(position).getTime());
+        if(myArr.get(position).getTimestamp() < System.currentTimeMillis()){
+            holder.complete_img.setVisibility(View.VISIBLE);
+        }else{
+            holder.complete_img.setVisibility(View.GONE);
+            holder.label_txt.setText(myArr.get(position).getLabel());
+            holder.desc_txt.setText(myArr.get(position).getDescription());
+            holder.date_txt.setText(myArr.get(position).getDate());
+            holder.time_txt.setText(myArr.get(position).getTime());
+        }
     }
 
     @Override
@@ -47,7 +52,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolderClas
     public class ViewHolderClass extends RecyclerView.ViewHolder{
 
         public TextView label_txt,desc_txt,date_txt,time_txt;
-        ImageView edit_img,delete_img;
+        ImageView edit_img,delete_img,complete_img;
 
         public ViewHolderClass(@NonNull View itemView) {
             super(itemView);
@@ -58,6 +63,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolderClas
             time_txt = itemView.findViewById(R.id.item_task_time_text);
             edit_img = itemView.findViewById(R.id.item_task_edit_image);
             delete_img = itemView.findViewById(R.id.item_task_delete_image);
+            complete_img = itemView.findViewById(R.id.item_task_completed_image);
 
             delete_img.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -83,6 +89,13 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolderClas
                     Intent intent = new Intent(context,UpdateTaskActivity.class);
                     intent.putExtra("task",myArr.get(getAdapterPosition()));
                     context.startActivity(intent);
+                }
+            });
+
+            complete_img.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(context,"This task is completed.",Toast.LENGTH_SHORT).show();
                 }
             });
         }
